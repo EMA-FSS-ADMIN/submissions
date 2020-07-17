@@ -50,7 +50,7 @@ public class EnumeratorBuilder {
 
     public EnumeratorBuilder phone(String phone) {
 
-        this.name = phone;
+        this.phone = phone;
         return this;
     }
 

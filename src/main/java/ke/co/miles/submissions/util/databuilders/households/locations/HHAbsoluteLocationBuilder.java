@@ -40,7 +40,7 @@ public class HHAbsoluteLocationBuilder {
     }    
     
     public HHAbsoluteLocationBuilder longitude(Double longitude) {
-        this.latitude = longitude;
+        this.longitude = longitude;
         return this;
     } 
     
@@ -63,12 +63,12 @@ public class HHAbsoluteLocationBuilder {
             log.trace("Splitting the latlon string into its constituent parts");
             String[] constituents = latlon.split(" ");
 
-            // Check if the latlon string was split into two parts
-            log.trace("Checking if the latlon string was split into two parts");
-            if (constituents.length == 2) {
+            // Check if the latlon string was split into constituent parts
+            log.trace("Checking if the latlon string was split into constituent parts");
+            if (constituents.length >= 2) {
 
-                // The latlon string was successfully split into two parts
-                log.trace("The latlon string was successfully split into two parts");
+                // The latlon string was successfully split into constituent parts
+                log.trace("The latlon string was successfully split into constituent parts");
 
                 // Parse the first constituent part as the latitude
                 log.trace("Parsing the first constituent part as the latitude");

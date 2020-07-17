@@ -14,15 +14,15 @@ import ke.co.miles.submissions.models.administrativeunits.Section;
 import ke.co.miles.submissions.models.administrativeunits.Village;
 import ke.co.miles.submissions.models.households.locations.HouseholdRelativeLocation;
 import ke.co.miles.submissions.util.databuilders.common.administration.DistrictBuilder;
-import ke.co.miles.submissions.util.databuilders.common.administration.DistrictChoice;
+import ke.co.miles.submissions.util.forms.choices.common.administration.DistrictChoice;
 import ke.co.miles.submissions.util.databuilders.common.administration.EPABuilder;
-import ke.co.miles.submissions.util.databuilders.common.administration.EPAChoice;
+import ke.co.miles.submissions.util.forms.choices.common.administration.EPAChoice;
 import ke.co.miles.submissions.util.databuilders.common.administration.RegionBuilder;
-import ke.co.miles.submissions.util.databuilders.common.administration.RegionChoice;
+import ke.co.miles.submissions.util.forms.choices.common.administration.RegionChoice;
 import ke.co.miles.submissions.util.databuilders.common.administration.SectionBuilder;
-import ke.co.miles.submissions.util.databuilders.common.administration.SectionChoice;
+import ke.co.miles.submissions.util.forms.choices.common.administration.SectionChoice;
 import ke.co.miles.submissions.util.databuilders.common.administration.VillageBuilder;
-import ke.co.miles.submissions.util.databuilders.common.administration.VillageChoice;
+import ke.co.miles.submissions.util.forms.choices.common.administration.VillageChoice;
 import lombok.extern.slf4j.Slf4j;
 
 /**

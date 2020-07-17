@@ -387,6 +387,7 @@ public class HHFoodProductionCategoricalObservationsBuilder {
           hhProducedFoodProducts = true;
           hhProducedPlantBasedFoodProducts = true;
           hhProducedBeans = true;
+					hhSufferedFoodProductsProductionLossOrDamage = true;
           hhSufferedPlantBasedFoodProductsProductionLossOrDamage = true;
           hhSufferedBeansProductionLossOrDamage = true;
           hhSufferedBeansProductionLossOrDamageOfLessThanHalfOfTheBeansProduced = true;
@@ -395,6 +396,7 @@ public class HHFoodProductionCategoricalObservationsBuilder {
           hhProducedFoodProducts = true;
           hhProducedPlantBasedFoodProducts = true;
           hhProducedBeans = true;
+					hhSufferedFoodProductsProductionLossOrDamage = true;
           hhSufferedPlantBasedFoodProductsProductionLossOrDamage = true;
           hhSufferedBeansProductionLossOrDamage = true;
           hhSufferedBeansProductionLossOrDamageOfAboutHalfOfTheBeansProduced = true;
@@ -403,6 +405,7 @@ public class HHFoodProductionCategoricalObservationsBuilder {
           hhProducedFoodProducts = true;
           hhProducedPlantBasedFoodProducts = true;
           hhProducedBeans = true;
+					hhSufferedFoodProductsProductionLossOrDamage = true;
           hhSufferedPlantBasedFoodProductsProductionLossOrDamage = true;
           hhSufferedBeansProductionLossOrDamage = true;
           hhSufferedBeansProductionLossOrDamageOfMoreThanHalfOfTheBeansProduced = true;
@@ -411,6 +414,7 @@ public class HHFoodProductionCategoricalObservationsBuilder {
           hhProducedFoodProducts = true;
           hhProducedPlantBasedFoodProducts = true;
           hhProducedBeans = true;
+					hhSufferedFoodProductsProductionLossOrDamage = true;
           hhSufferedPlantBasedFoodProductsProductionLossOrDamage = true;
           hhSufferedBeansProductionLossOrDamage = true;
           hhSufferedBeansProductionLossOrDamageOfPracticallyAllOfTheBeansProduced = true;
@@ -443,6 +447,7 @@ public class HHFoodProductionCategoricalObservationsBuilder {
           hhProducedFoodProducts = true;
           hhProducedPlantBasedFoodProducts = true;
           hhProducedCassava = true;
+					hhSufferedFoodProductsProductionLossOrDamage = true;
           hhSufferedPlantBasedFoodProductsProductionLossOrDamage = true;
           hhSufferedCassavaProductionLossOrDamage = true;
           hhSufferedCassavaProductionLossOrDamageOfLessThanHalfOfTheCassavaProduced = true;
@@ -451,6 +456,7 @@ public class HHFoodProductionCategoricalObservationsBuilder {
           hhProducedFoodProducts = true;
           hhProducedPlantBasedFoodProducts = true;
           hhProducedCassava = true;
+					hhSufferedFoodProductsProductionLossOrDamage = true;
           hhSufferedPlantBasedFoodProductsProductionLossOrDamage = true;
           hhSufferedCassavaProductionLossOrDamage = true;
           hhSufferedCassavaProductionLossOrDamageOfAboutHalfOfTheCassavaProduced = true;
@@ -459,6 +465,7 @@ public class HHFoodProductionCategoricalObservationsBuilder {
           hhProducedFoodProducts = true;
           hhProducedPlantBasedFoodProducts = true;
           hhProducedCassava = true;
+					hhSufferedFoodProductsProductionLossOrDamage = true;
           hhSufferedPlantBasedFoodProductsProductionLossOrDamage = true;
           hhSufferedCassavaProductionLossOrDamage = true;
           hhSufferedCassavaProductionLossOrDamageOfMoreThanHalfOfTheCassavaProduced = true;
@@ -467,6 +474,7 @@ public class HHFoodProductionCategoricalObservationsBuilder {
           hhProducedFoodProducts = true;
           hhProducedPlantBasedFoodProducts = true;
           hhProducedCassava = true;
+					hhSufferedFoodProductsProductionLossOrDamage = true;
           hhSufferedPlantBasedFoodProductsProductionLossOrDamage = true;
           hhSufferedCassavaProductionLossOrDamage = true;
           hhSufferedCassavaProductionLossOrDamageOfPracticallyAllOfTheCassavaProduced = true;
@@ -500,6 +508,7 @@ public class HHFoodProductionCategoricalObservationsBuilder {
           hhProducedFoodProducts = true;
           hhProducedPlantBasedFoodProducts = true;
           hhProducedIrishPotatoes = true;
+					hhSufferedFoodProductsProductionLossOrDamage = true;
           hhSufferedPlantBasedFoodProductsProductionLossOrDamage = true;
           hhSufferedIrishPotatoesProductionLossOrDamage = true;
           hhSufferedIrishPotatoesProductionLossOrDamageOfLessThanHalfOfTheIrishPotatoesProduced =
@@ -509,6 +518,7 @@ public class HHFoodProductionCategoricalObservationsBuilder {
           hhProducedFoodProducts = true;
           hhProducedPlantBasedFoodProducts = true;
           hhProducedIrishPotatoes = true;
+					hhSufferedFoodProductsProductionLossOrDamage = true;
           hhSufferedPlantBasedFoodProductsProductionLossOrDamage = true;
           hhSufferedIrishPotatoesProductionLossOrDamage = true;
           hhSufferedIrishPotatoesProductionLossOrDamageOfAboutHalfOfTheIrishPotatoesProduced = true;
@@ -517,6 +527,7 @@ public class HHFoodProductionCategoricalObservationsBuilder {
           hhProducedFoodProducts = true;
           hhProducedPlantBasedFoodProducts = true;
           hhProducedIrishPotatoes = true;
+					hhSufferedFoodProductsProductionLossOrDamage = true;
           hhSufferedPlantBasedFoodProductsProductionLossOrDamage = true;
           hhSufferedIrishPotatoesProductionLossOrDamage = true;
           hhSufferedIrishPotatoesProductionLossOrDamageOfMoreThanHalfOfTheIrishPotatoesProduced =
@@ -526,6 +537,7 @@ public class HHFoodProductionCategoricalObservationsBuilder {
           hhProducedFoodProducts = true;
           hhProducedPlantBasedFoodProducts = true;
           hhProducedIrishPotatoes = true;
+					hhSufferedFoodProductsProductionLossOrDamage = true;
           hhSufferedPlantBasedFoodProductsProductionLossOrDamage = true;
           hhSufferedIrishPotatoesProductionLossOrDamage = true;
           hhSufferedIrishPotatoesProductionLossOrDamageOfPracticallyAllOfTheIrishPotatoesProduced =
@@ -560,6 +572,7 @@ public class HHFoodProductionCategoricalObservationsBuilder {
           hhProducedFoodProducts = true;
           hhProducedPlantBasedFoodProducts = true;
           hhProducedSweetPotatoes = true;
+					hhSufferedFoodProductsProductionLossOrDamage = true;
           hhSufferedPlantBasedFoodProductsProductionLossOrDamage = true;
           hhSufferedSweetPotatoesProductionLossOrDamage = true;
           hhSufferedSweetPotatoesProductionLossOrDamageOfLessThanHalfOfTheSweetPotatoesProduced =
@@ -569,6 +582,7 @@ public class HHFoodProductionCategoricalObservationsBuilder {
           hhProducedFoodProducts = true;
           hhProducedPlantBasedFoodProducts = true;
           hhProducedSweetPotatoes = true;
+					hhSufferedFoodProductsProductionLossOrDamage = true;
           hhSufferedPlantBasedFoodProductsProductionLossOrDamage = true;
           hhSufferedSweetPotatoesProductionLossOrDamage = true;
           hhSufferedSweetPotatoesProductionLossOrDamageOfAboutHalfOfTheSweetPotatoesProduced = true;
@@ -577,6 +591,7 @@ public class HHFoodProductionCategoricalObservationsBuilder {
           hhProducedFoodProducts = true;
           hhProducedPlantBasedFoodProducts = true;
           hhProducedSweetPotatoes = true;
+					hhSufferedFoodProductsProductionLossOrDamage = true;
           hhSufferedPlantBasedFoodProductsProductionLossOrDamage = true;
           hhSufferedSweetPotatoesProductionLossOrDamage = true;
           hhSufferedSweetPotatoesProductionLossOrDamageOfMoreThanHalfOfTheSweetPotatoesProduced =
@@ -586,6 +601,7 @@ public class HHFoodProductionCategoricalObservationsBuilder {
           hhProducedFoodProducts = true;
           hhProducedPlantBasedFoodProducts = true;
           hhProducedSweetPotatoes = true;
+					hhSufferedFoodProductsProductionLossOrDamage = true;
           hhSufferedPlantBasedFoodProductsProductionLossOrDamage = true;
           hhSufferedSweetPotatoesProductionLossOrDamage = true;
           hhSufferedSweetPotatoesProductionLossOrDamageOfPracticallyAllOfTheSweetPotatoesProduced =
@@ -619,6 +635,7 @@ public class HHFoodProductionCategoricalObservationsBuilder {
           hhProducedFoodProducts = true;
           hhProducedPlantBasedFoodProducts = true;
           hhProducedMaize = true;
+					hhSufferedFoodProductsProductionLossOrDamage = true;
           hhSufferedPlantBasedFoodProductsProductionLossOrDamage = true;
           hhSufferedMaizeProductionLossOrDamage = true;
           hhSufferedMaizeProductionLossOrDamageOfLessThanHalfOfTheMaizeProduced = true;
@@ -627,6 +644,7 @@ public class HHFoodProductionCategoricalObservationsBuilder {
           hhProducedFoodProducts = true;
           hhProducedPlantBasedFoodProducts = true;
           hhProducedMaize = true;
+					hhSufferedFoodProductsProductionLossOrDamage = true;
           hhSufferedPlantBasedFoodProductsProductionLossOrDamage = true;
           hhSufferedMaizeProductionLossOrDamage = true;
           hhSufferedMaizeProductionLossOrDamageOfAboutHalfOfTheMaizeProduced = true;
@@ -635,6 +653,7 @@ public class HHFoodProductionCategoricalObservationsBuilder {
           hhProducedFoodProducts = true;
           hhProducedPlantBasedFoodProducts = true;
           hhProducedMaize = true;
+					hhSufferedFoodProductsProductionLossOrDamage = true;
           hhSufferedPlantBasedFoodProductsProductionLossOrDamage = true;
           hhSufferedMaizeProductionLossOrDamage = true;
           hhSufferedMaizeProductionLossOrDamageOfMoreThanHalfOfTheMaizeProduced = true;
@@ -643,6 +662,7 @@ public class HHFoodProductionCategoricalObservationsBuilder {
           hhProducedFoodProducts = true;
           hhProducedPlantBasedFoodProducts = true;
           hhProducedMaize = true;
+					hhSufferedFoodProductsProductionLossOrDamage = true;
           hhSufferedPlantBasedFoodProductsProductionLossOrDamage = true;
           hhSufferedMaizeProductionLossOrDamage = true;
           hhSufferedMaizeProductionLossOrDamageOfPracticallyAllOfTheMaizeProduced = true;
@@ -675,6 +695,7 @@ public class HHFoodProductionCategoricalObservationsBuilder {
           hhProducedFoodProducts = true;
           hhProducedPlantBasedFoodProducts = true;
           hhProducedRice = true;
+					hhSufferedFoodProductsProductionLossOrDamage = true;
           hhSufferedPlantBasedFoodProductsProductionLossOrDamage = true;
           hhSufferedRiceProductionLossOrDamage = true;
           hhSufferedRiceProductionLossOrDamageOfLessThanHalfOfTheRiceProduced = true;
@@ -683,6 +704,7 @@ public class HHFoodProductionCategoricalObservationsBuilder {
           hhProducedFoodProducts = true;
           hhProducedPlantBasedFoodProducts = true;
           hhProducedRice = true;
+					hhSufferedFoodProductsProductionLossOrDamage = true;
           hhSufferedPlantBasedFoodProductsProductionLossOrDamage = true;
           hhSufferedRiceProductionLossOrDamage = true;
           hhSufferedRiceProductionLossOrDamageOfAboutHalfOfTheRiceProduced = true;
@@ -691,6 +713,7 @@ public class HHFoodProductionCategoricalObservationsBuilder {
           hhProducedFoodProducts = true;
           hhProducedPlantBasedFoodProducts = true;
           hhProducedRice = true;
+					hhSufferedFoodProductsProductionLossOrDamage = true;
           hhSufferedPlantBasedFoodProductsProductionLossOrDamage = true;
           hhSufferedRiceProductionLossOrDamage = true;
           hhSufferedRiceProductionLossOrDamageOfMoreThanHalfOfTheRiceProduced = true;
@@ -699,6 +722,7 @@ public class HHFoodProductionCategoricalObservationsBuilder {
           hhProducedFoodProducts = true;
           hhProducedPlantBasedFoodProducts = true;
           hhProducedRice = true;
+					hhSufferedFoodProductsProductionLossOrDamage = true;
           hhSufferedPlantBasedFoodProductsProductionLossOrDamage = true;
           hhSufferedRiceProductionLossOrDamage = true;
           hhSufferedRiceProductionLossOrDamageOfPracticallyAllOfTheRiceProduced = true;
@@ -731,6 +755,7 @@ public class HHFoodProductionCategoricalObservationsBuilder {
           hhProducedFoodProducts = true;
           hhProducedPlantBasedFoodProducts = true;
           hhProducedGroundnuts = true;
+					hhSufferedFoodProductsProductionLossOrDamage = true;
           hhSufferedPlantBasedFoodProductsProductionLossOrDamage = true;
           hhSufferedGroundnutsProductionLossOrDamage = true;
           hhSufferedGroundnutsProductionLossOrDamageOfLessThanHalfOfTheGroundnutsProduced = true;
@@ -739,6 +764,7 @@ public class HHFoodProductionCategoricalObservationsBuilder {
           hhProducedFoodProducts = true;
           hhProducedPlantBasedFoodProducts = true;
           hhProducedGroundnuts = true;
+					hhSufferedFoodProductsProductionLossOrDamage = true;
           hhSufferedPlantBasedFoodProductsProductionLossOrDamage = true;
           hhSufferedGroundnutsProductionLossOrDamage = true;
           hhSufferedGroundnutsProductionLossOrDamageOfAboutHalfOfTheGroundnutsProduced = true;
@@ -747,6 +773,7 @@ public class HHFoodProductionCategoricalObservationsBuilder {
           hhProducedFoodProducts = true;
           hhProducedPlantBasedFoodProducts = true;
           hhProducedGroundnuts = true;
+					hhSufferedFoodProductsProductionLossOrDamage = true;
           hhSufferedPlantBasedFoodProductsProductionLossOrDamage = true;
           hhSufferedGroundnutsProductionLossOrDamage = true;
           hhSufferedGroundnutsProductionLossOrDamageOfMoreThanHalfOfTheGroundnutsProduced = true;
@@ -755,6 +782,7 @@ public class HHFoodProductionCategoricalObservationsBuilder {
           hhProducedFoodProducts = true;
           hhProducedPlantBasedFoodProducts = true;
           hhProducedGroundnuts = true;
+					hhSufferedFoodProductsProductionLossOrDamage = true;
           hhSufferedPlantBasedFoodProductsProductionLossOrDamage = true;
           hhSufferedGroundnutsProductionLossOrDamage = true;
           hhSufferedGroundnutsProductionLossOrDamageOfPracticallyAllOfTheGroundnutsProduced = true;
@@ -788,6 +816,7 @@ public class HHFoodProductionCategoricalObservationsBuilder {
           hhProducedFoodProducts = true;
           hhProducedAnimalBasedFoodProducts = true;
           hhProducedBeef = true;
+					hhSufferedFoodProductsProductionLossOrDamage = true;
           hhSufferedAnimalBasedFoodProductsProductionLossOrDamage = true;
           hhSufferedBeefProductionLossOrDamage = true;
           hhSufferedBeefProductionLossOrDamageOfLessThanHalfOfTheBeefProduced = true;
@@ -797,6 +826,7 @@ public class HHFoodProductionCategoricalObservationsBuilder {
           hhProducedFoodProducts = true;
           hhProducedAnimalBasedFoodProducts = true;
           hhProducedBeef = true;
+					hhSufferedFoodProductsProductionLossOrDamage = true;
           hhSufferedAnimalBasedFoodProductsProductionLossOrDamage = true;
           hhSufferedBeefProductionLossOrDamage = true;
           hhSufferedBeefProductionLossOrDamageOfAboutHalfOfTheBeefProduced = true;
@@ -806,6 +836,7 @@ public class HHFoodProductionCategoricalObservationsBuilder {
           hhProducedFoodProducts = true;
           hhProducedAnimalBasedFoodProducts = true;
           hhProducedBeef = true;
+					hhSufferedFoodProductsProductionLossOrDamage = true;
           hhSufferedAnimalBasedFoodProductsProductionLossOrDamage = true;
           hhSufferedBeefProductionLossOrDamage = true;
           hhSufferedBeefProductionLossOrDamageOfMoreThanHalfOfTheBeefProduced = true;
@@ -815,6 +846,7 @@ public class HHFoodProductionCategoricalObservationsBuilder {
           hhProducedFoodProducts = true;
           hhProducedAnimalBasedFoodProducts = true;
           hhProducedBeef = true;
+					hhSufferedFoodProductsProductionLossOrDamage = true;
           hhSufferedAnimalBasedFoodProductsProductionLossOrDamage = true;
           hhSufferedBeefProductionLossOrDamage = true;
           hhSufferedBeefProductionLossOrDamageOfPracticallyAllOfTheBeefProduced = true;
@@ -848,6 +880,7 @@ public class HHFoodProductionCategoricalObservationsBuilder {
           hhProducedFoodProducts = true;
           hhProducedAnimalBasedFoodProducts = true;
           hhProducedGoatMeat = true;
+					hhSufferedFoodProductsProductionLossOrDamage = true;
           hhSufferedAnimalBasedFoodProductsProductionLossOrDamage = true;
           hhSufferedGoatMeatProductionLossOrDamage = true;
           hhSufferedGoatMeatProductionLossOrDamageOfLessThanHalfOfTheGoatMeatProduced = true;
@@ -857,6 +890,7 @@ public class HHFoodProductionCategoricalObservationsBuilder {
           hhProducedFoodProducts = true;
           hhProducedAnimalBasedFoodProducts = true;
           hhProducedGoatMeat = true;
+					hhSufferedFoodProductsProductionLossOrDamage = true;
           hhSufferedAnimalBasedFoodProductsProductionLossOrDamage = true;
           hhSufferedGoatMeatProductionLossOrDamage = true;
           hhSufferedGoatMeatProductionLossOrDamageOfAboutHalfOfTheGoatMeatProduced = true;
@@ -866,6 +900,7 @@ public class HHFoodProductionCategoricalObservationsBuilder {
           hhProducedFoodProducts = true;
           hhProducedAnimalBasedFoodProducts = true;
           hhProducedGoatMeat = true;
+					hhSufferedFoodProductsProductionLossOrDamage = true;
           hhSufferedAnimalBasedFoodProductsProductionLossOrDamage = true;
           hhSufferedGoatMeatProductionLossOrDamage = true;
           hhSufferedGoatMeatProductionLossOrDamageOfMoreThanHalfOfTheGoatMeatProduced = true;
@@ -875,6 +910,7 @@ public class HHFoodProductionCategoricalObservationsBuilder {
           hhProducedFoodProducts = true;
           hhProducedAnimalBasedFoodProducts = true;
           hhProducedGoatMeat = true;
+					hhSufferedFoodProductsProductionLossOrDamage = true;
           hhSufferedAnimalBasedFoodProductsProductionLossOrDamage = true;
           hhSufferedGoatMeatProductionLossOrDamage = true;
           hhSufferedGoatMeatProductionLossOrDamageOfPracticallyAllOfTheGoatMeatProduced = true;
@@ -908,6 +944,7 @@ public class HHFoodProductionCategoricalObservationsBuilder {
           hhProducedFoodProducts = true;
           hhProducedAnimalBasedFoodProducts = true;
           hhProducedPork = true;
+					hhSufferedFoodProductsProductionLossOrDamage = true;
           hhSufferedAnimalBasedFoodProductsProductionLossOrDamage = true;
           hhSufferedPorkProductionLossOrDamage = true;
           hhSufferedPorkProductionLossOrDamageOfLessThanHalfOfThePorkProduced = true;
@@ -917,6 +954,7 @@ public class HHFoodProductionCategoricalObservationsBuilder {
           hhProducedFoodProducts = true;
           hhProducedAnimalBasedFoodProducts = true;
           hhProducedPork = true;
+					hhSufferedFoodProductsProductionLossOrDamage = true;
           hhSufferedAnimalBasedFoodProductsProductionLossOrDamage = true;
           hhSufferedPorkProductionLossOrDamage = true;
           hhSufferedPorkProductionLossOrDamageOfAboutHalfOfThePorkProduced = true;
@@ -926,6 +964,7 @@ public class HHFoodProductionCategoricalObservationsBuilder {
           hhProducedFoodProducts = true;
           hhProducedAnimalBasedFoodProducts = true;
           hhProducedPork = true;
+					hhSufferedFoodProductsProductionLossOrDamage = true;
           hhSufferedAnimalBasedFoodProductsProductionLossOrDamage = true;
           hhSufferedPorkProductionLossOrDamage = true;
           hhSufferedPorkProductionLossOrDamageOfMoreThanHalfOfThePorkProduced = true;
@@ -935,6 +974,7 @@ public class HHFoodProductionCategoricalObservationsBuilder {
           hhProducedFoodProducts = true;
           hhProducedAnimalBasedFoodProducts = true;
           hhProducedPork = true;
+					hhSufferedFoodProductsProductionLossOrDamage = true;
           hhSufferedAnimalBasedFoodProductsProductionLossOrDamage = true;
           hhSufferedPorkProductionLossOrDamage = true;
           hhSufferedPorkProductionLossOrDamageOfPracticallyAllOfThePorkProduced = true;

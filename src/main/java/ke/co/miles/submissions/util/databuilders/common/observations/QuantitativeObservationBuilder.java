@@ -59,6 +59,6 @@ public class QuantitativeObservationBuilder {
     }   
     
     public QuantitativeObservation build() {
-        return new QuantitativeObservation(Long.MIN_VALUE, phenomenonType, value, unit);
+        return new QuantitativeObservation(phenomenonTypeId, phenomenonType, value, unit);
     }
 }

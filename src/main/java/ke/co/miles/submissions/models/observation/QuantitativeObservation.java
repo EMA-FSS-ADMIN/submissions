@@ -21,7 +21,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class QuantitativeObservation {
-    private Long phenomenonTypeId;
+    private Integer phenomenonTypeId;
     private String phenomenonType;    
     private Number value;
     private Unit unit;

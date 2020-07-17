@@ -7,6 +7,7 @@
  */
 package ke.co.miles.submissions.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
@@ -19,6 +20,7 @@ import javax.json.Json;
 import javax.json.stream.JsonParser;
 import javax.json.stream.JsonParser.Event;
 import ke.co.miles.submissions.models.households.HouseholdData;
+import ke.co.miles.submissions.util.databuilders.households.HouseholdDataBuilder;
 import ke.co.miles.submissions.util.datareaders.households.AbstractHouseholdDataReader;
 import ke.co.miles.submissions.util.datareaders.households.dates.HHDataCollectionDateDataReader;
 import ke.co.miles.submissions.util.datareaders.households.enumerators.HHEnumeratorsNameDataReader;
@@ -63,6 +65,7 @@ import ke.co.miles.submissions.util.datareaders.households.locations.relative.HH
 import ke.co.miles.submissions.util.datareaders.households.locations.relative.HHEPADataReader;
 import ke.co.miles.submissions.util.datareaders.households.locations.relative.HHRegionDataReader;
 import ke.co.miles.submissions.util.datareaders.households.locations.relative.HHSectionDataReader;
+import ke.co.miles.submissions.util.datareaders.households.locations.relative.HHVillageNameDataReader;
 import ke.co.miles.submissions.util.datareaders.households.members.HHFemaleMembersDataReader;
 import ke.co.miles.submissions.util.datareaders.households.members.HHMaleMembersDataReader;
 import ke.co.miles.submissions.util.datareaders.households.members.HHTotalMembersDataReader;
@@ -84,7 +87,7 @@ import reactor.core.publisher.Flux;
  * @version 1.0
  */
 @RestController
-@RequestMapping("api/v1/household_data")
+@RequestMapping("api/v1/submissions")
 @Slf4j
 public class SubmissionController {
 
@@ -93,7 +96,7 @@ public class SubmissionController {
    * @throws ProtocolException
    * @throws IOException
    */
-  @GetMapping()
+  @GetMapping("/household_data")
   public Flux<HouseholdData> retrieveHouseholdData()
       throws MalformedURLException, ProtocolException, IOException {
 
@@ -132,36 +135,157 @@ public class SubmissionController {
 
             case "results":
 
-              // Get the next token
-              e = parser.next();
+              // Check there are results to read
+              log.trace("Checking if there are results to read");
+              if (totalResults > 0) {
 
-              // Continue iff the next token is the start of an array
-              if (e == Event.START_ARRAY) {
+                // There are results to read
+                log.trace("There are results to read");
+                log.debug("Results = {}", totalResults);
 
-                // Continue iff the array is not empty
-                if (e != Event.END_ARRAY) {
+                // Get the next token
+                log.trace("Getting the next token");
+                e = parser.next();
 
-                  for (int i = 0; i < totalResults; i++) {
+                // Check if the next token is the start of an array
+                log.trace("Checking if the next token is the start of an array");
+                if (e == Event.START_ARRAY) {
 
-                    // Move into the object
-                    do {} while (parser.next() != Event.END_OBJECT);
+                  // The next token is the start of an array
+                  log.trace("The next token is the start of an array");
+
+                  // Get the next token
+                  log.trace("Getting the next token");
+                  e = parser.next();
+
+                  // Loop through the results to extract the data
+                  log.trace("Looping through the results to extract the data");
+                  boolean done;
+                  AbstractHouseholdDataReader dataReader;
+                  HouseholdDataBuilder hdb;
+
+                  for (int i = 0; i < 2; i++) {
+
+                    // Check if the current token is the start of an object
+                    log.trace("Checking if the current token is the start of an object");
+
+                    if (e == Event.START_OBJECT) {
+
+                      // The token is the start of an object
+                      log.trace("The token is the start of an object");
+
+                      // Resetting the done flag to false
+                      log.trace("Resetting the done flag to false");
+                      done = false;
+
+                      // Initializing a new data reader set
+                      log.trace("Initializing a new data reader set");
+                      dataReader = initializeDataProcessingChain(parser);
+
+                      // Initialize the Households Data Builder
+                      log.trace("Initializing the Households Data Builder");
+                      hdb = new HouseholdDataBuilder();
+
+                      // Get the next token
+                      log.trace("Getting the next token");
+                      e = parser.next();
+
+                      do {
+
+                        switch (e) {
+                          case KEY_NAME:
+
+                            // The next token is a key name
+                            log.trace("The next token is a key name");
+                            log.debug("Key = {}", parser.getString());
+
+                            if (!isHHFieldRequired(parser.getString()) || !dataReader.read(hdb)) {
+
+                              // Data is not required or could not be read
+                              log.warn("Data is not required or could not be read");
+
+                              // Skip Field
+                              skipField(parser);
+                            }
+
+                            // Move to next
+                            e = parser.next();
+                            break;
+                          case END_ARRAY:
+                            // The next token is not a key name
+                            log.trace("The next token is an end array");
+                            done = true;
+                            break;
+                          case END_OBJECT:
+                            // The next token is not a key name
+                            log.trace("The next token is an end object");
+                            done = true;
+                            break;
+                          case START_ARRAY:
+                            // The next token is not a key name
+                            log.trace("The next token is a start array");
+                            done = true;
+                            break;
+                          case START_OBJECT:
+                            // The next token is not a key name
+                            log.trace("The next token is a start object");
+                            done = true;
+                            break;
+                          case VALUE_FALSE:
+                            // The next token is not a key name
+                            log.trace("The next token is a value false");
+                            done = true;
+                            break;
+                          case VALUE_NULL:
+                            // The next token is not a key name
+                            log.trace("The next token is a value null");
+                            done = true;
+                            break;
+                          case VALUE_NUMBER:
+                            // The next token is not a key name
+                            log.trace("The next token is a value number");
+                            done = true;
+                            break;
+                          case VALUE_STRING:
+                            // The next token is not a key name
+                            log.trace("The next token is a value string");
+                            done = true;
+                            break;
+                          case VALUE_TRUE:
+                            // The next token is not a key name
+                            log.trace("The next token is a value true");
+                            done = true;
+                            break;
+                        }
+
+                      } while (!done);
+
+                      // Stream the data
+                      System.out.println(new ObjectMapper().writeValueAsString(hdb.build()));
+                      System.out.println("Read Results = " + ++readResults);
+                      System.out.println("--------------------------------");
+                    }
+
+                    // Check if there is another object
+                    log.trace("Checking if there is another object");
+                    if (parser.hasNext()) {
+
+                      // There is another object
+                      log.trace("There is another object");
+											
+                      // Move to the next object
+                      log.trace("Moving to the next object");											
+                      e = parser.next();
+                    }
                   }
                 }
               }
-              System.out.println(parser.getString());
-              System.out.println("---------");
-              break;
           }
         }
       }
     }
 
     return Flux.empty();
-  }
-
-  private Object read(Event e) {
-
-    return new Object();
   }
 
   private AbstractHouseholdDataReader initializeDataProcessingChain(JsonParser parser) {
@@ -173,22 +297,18 @@ public class SubmissionController {
     log.trace("Adding the ID Data Reader to the Processing Chain");
     addDataReader(dataReaders, new HHRecordIdDataReader(parser));
     // </ editor-fold>
-
     // <editor-fold defaultstate="collapsed" desc="UUID">
     log.trace("Adding UUID Data Reader to the Processing Chain");
     addDataReader(dataReaders, new HHRecordUUIDDataReader(parser));
     // </ editor-fold>
-
     // <editor-fold defaultstate="collapsed" desc="Submission Time">
     log.trace("Adding Submission Time Data Reader to the Processing Chain");
     addDataReader(dataReaders, new HHRecordSubmissionTimeDataReader(parser));
     // </ editor-fold>
-
     // <editor-fold defaultstate="collapsed" desc="Collection Date">
     log.trace("Adding Collection Date Data Reader to the Processing Chain");
     addDataReader(dataReaders, new HHDataCollectionDateDataReader(parser));
     // </ editor-fold>
-
     // <editor-fold defaultstate="collapsed" desc="Location - Relative">
     log.trace("Adding Region Data Reader to the Data Processing Chain");
     addDataReader(dataReaders, new HHRegionDataReader(parser));
@@ -201,13 +321,14 @@ public class SubmissionController {
 
     log.trace("Adding Section Data Reader to the Data Processing Chain");
     addDataReader(dataReaders, new HHSectionDataReader(parser));
-    // </ editor-fold>
 
+    log.trace("Adding Village Data Reader to the Data Processing Chain");
+    addDataReader(dataReaders, new HHVillageNameDataReader(parser));
+    // </ editor-fold>
     // <editor-fold defaultstate="collapsed" desc="Location - Absolute">
     log.trace("Adding GPS Lat Lon Data Reader to the Processing Chain");
     addDataReader(dataReaders, new HHGPSDataReader(parser));
     // </ editor-fold>
-
     // <editor-fold defaultstate="collapsed" desc="Data Enumerator">
     log.trace("Adding Data Enumerator's Name Data Reader to the Processing Chain");
     addDataReader(dataReaders, new HHEnumeratorsNameDataReader(parser));
@@ -218,7 +339,6 @@ public class SubmissionController {
     log.trace("Adding Data Enumerator's Phone Data Reader to the Processing Chain");
     addDataReader(dataReaders, new HHEnumeratorsPhoneNumberDataReader(parser));
     // </ editor-fold>
-
     // <editor-fold defaultstate="collapsed" desc="Respondent">
     log.trace("Adding Respondent's Name Data Reader to the Processing Chain");
     addDataReader(dataReaders, new HHRespondentsNameDataReader(parser));
@@ -230,7 +350,6 @@ public class SubmissionController {
     addDataReader(dataReaders, new HHRespondentsAgeDataReader(parser));
 
     // </ editor-fold>
-
     // <editor-fold defaultstate="collapsed" desc="Household Head">
     log.trace("Adding Household Head's Name Data Reader to the Processing Chain");
     addDataReader(dataReaders, new HHHeadsNameDataReader(parser));
@@ -242,7 +361,6 @@ public class SubmissionController {
     addDataReader(dataReaders, new HHHeadsAgeDataReader(parser));
 
     // </ editor-fold>
-
     // <editor-fold defaultstate="collapsed" desc="Household Members">
     log.trace("Adding Male Household Members Data Reader to the Processing Chain");
     addDataReader(dataReaders, new HHMaleMembersDataReader(parser));
@@ -253,7 +371,6 @@ public class SubmissionController {
     log.trace("Adding Total Household Members Data Reader to the Processing Chain");
     addDataReader(dataReaders, new HHTotalMembersDataReader(parser));
     // </ editor-fold>
-
     // <editor-fold defaultstate="collapsed" desc="Food Source">
     log.trace("Adding Main Food Source Data Reader to the Processing Chain");
     addDataReader(dataReaders, new HHMainFoodSourceDataReader(parser));
@@ -261,7 +378,6 @@ public class SubmissionController {
     log.trace("Adding Other Food Source Data Reader to the Processing Chain");
     addDataReader(dataReaders, new HHOtherFoodSourceDataReader(parser));
     // </ editor-fold>
-
     // <editor-fold defaultstate="collapsed" desc="Income Source">
     log.trace("Adding Main Income Source Data Reader to the Processing Chain");
     addDataReader(dataReaders, new HHMainIncomeSourceDataReader(parser));
@@ -269,9 +385,7 @@ public class SubmissionController {
     log.trace("Adding Other Income Source Data Reader to the Processing Chain");
     addDataReader(dataReaders, new HHOtherIncomeSourceDataReader(parser));
     // </ editor-fold>
-
     // <editor-fold defaultstate="collapsed" desc="Food Production + Livestock Rearing">
-
     log.trace("Adding Fruits Loss Data Reader to the Processing Chain");
     addDataReader(dataReaders, new HHFruitsLossDataReader(parser));
 
@@ -312,7 +426,6 @@ public class SubmissionController {
     addDataReader(dataReaders, new HHPorkLossDataReader(parser));
 
     // </ editor-fold>
-
     // <editor-fold defaultstate="collapsed" desc="Food Insecurity">
     log.trace("Adding Food Insecurity Status Data Reader to the Processing Chain");
     addDataReader(dataReaders, new HHFoodInsecurityDataReader(parser));
@@ -320,7 +433,7 @@ public class SubmissionController {
     log.trace("Adding Less Expensive Food Data Reader to the Processing Chain");
     addDataReader(
         dataReaders, new HHDaysLivedOnLessPreferredAndLessExpensiveFoodDataReader(parser));
-		
+
     log.trace("Adding Reliance On Help From Friends/Relatives Data Reader to the Processing Chain");
     addDataReader(
         dataReaders, new HHDaysLivedOnBorrowedFoodOrHelpFromAFriendOrRelativeDataReader(parser));
@@ -334,39 +447,38 @@ public class SubmissionController {
     log.trace("Adding Reliance On Reduce Number Of Meals Data Reader to the Processing Chain");
     addDataReader(dataReaders, new HHDaysLivedOnReducedNumberOfMealsEatenInADayDataReader(parser));
     // </ editor-fold>
-
     // <editor-fold defaultstate="collapsed" desc="Livestock">
     log.trace("Adding Livestock Status Data Reader to the Processing Chain");
-		addDataReader(dataReaders, new HHLivestockRearingStatusDataReader(parser));
-		
+    addDataReader(dataReaders, new HHLivestockRearingStatusDataReader(parser));
+
     log.trace("Adding Livestock Diseases Data Reader to the Processing Chain");
-		addDataReader(dataReaders, new HHLivestockDiseasesDataReader(parser));
+    addDataReader(dataReaders, new HHLivestockDiseasesDataReader(parser));
 
     log.trace("Adding Livestock Health Services Acess Data Reader to the Processing Chain");
-		addDataReader(dataReaders, new HHLivestockHealthServicesAccessDataReader(parser));	
-		
-    log.trace("Adding Livestock Livestock Health Services Acess Hinderance Data Reader to the Processing Chain");
-		addDataReader(dataReaders, new HHLivestockHealthServicesAccessFailureCauseDataReader(parser));		
+    addDataReader(dataReaders, new HHLivestockHealthServicesAccessDataReader(parser));
 
-    log.trace("Adding Other Livestock Livestock Health Services Acess Hinderance Data Reader to the Processing Chain");
-		addDataReader(dataReaders, new HHOtherLivestockHealthServicesAccessFailureCauseDataReader(parser));		
-		
+    log.trace(
+        "Adding Livestock Livestock Health Services Acess Hinderance Data Reader to the Processing Chain");
+    addDataReader(dataReaders, new HHLivestockHealthServicesAccessFailureCauseDataReader(parser));
+
+    log.trace(
+        "Adding Other Livestock Livestock Health Services Acess Hinderance Data Reader to the Processing Chain");
+    addDataReader(
+        dataReaders, new HHOtherLivestockHealthServicesAccessFailureCauseDataReader(parser));
+
     // </ editor-fold>
-		
     // <editor-fold defaultstate="collapsed" desc="Farm Inputs - (In)Accessibility">
     log.trace("Adding Accessible Farm Inputs Data Reader to the Processing Chain");
-		addDataReader(dataReaders, new HHAccessibleFarmInputDataReader(parser));
-		
+    addDataReader(dataReaders, new HHAccessibleFarmInputDataReader(parser));
+
     log.trace("Adding Farm Inputs Inacessibility Reason Data Reader to the Processing Chain");
-		addDataReader(dataReaders, new HHFarmInputsInaccessibilityReasonsDataReader(parser));
+    addDataReader(dataReaders, new HHFarmInputsInaccessibilityReasonsDataReader(parser));
 
     log.trace("Adding Other Farm Inputs Inacessibility Reason Data Reader to the Processing Chain");
-		addDataReader(dataReaders, new HHOtherFarmInputsInaccessibilityReasonDataReader(parser));			
+    addDataReader(dataReaders, new HHOtherFarmInputsInaccessibilityReasonDataReader(parser));
 
     // </ editor-fold>
-		
-		return dataReaders.get(0);
-
+    return dataReaders.get(0);
   }
 
   private void addDataReader(
@@ -382,5 +494,119 @@ public class SubmissionController {
     }
 
     dataReaders.add(next);
+  }
+
+  private boolean isHHFieldRequired(String fieldName) {
+    switch (fieldName) {
+      case "SECTION_A/region":
+      case "SECTION_A/district":
+      case "SECTION_A/epa":
+      case "SECTION_A/section":
+      case "SECTION_A/enumerator":
+      case "SECTION_A/Sex_of_data_collector":
+      case "SECTION_A/phone_number":
+      case "SECTION_A/village_name":
+      case "SECTION_A/Data_collectio_date":
+      case "SECTION_B/respondent_name":
+      case "SECTION_B/Sex_respondent":
+      case "SECTION_B/age_respondent":
+      case "SECTION_B/Houseld_head":
+      case "SECTION_B/sex_hhh":
+      case "SECTION_B/age_hhh":
+      case "SECTION_B/hh_Male_members":
+      case "SECTION_B/hh_Female_members":
+      case "SECTION_B/Total_hh_Memebers":
+      case "SECTION_B/GPS_Household":
+      case "SECTION_B/main_food_source":
+      case "SECTION_B/Other_food_sources":
+      case "SECTION_B/main_income_source":
+      case "SECTION_B/Other_income_sources":
+      case "SECTION_B/Maize_loss":
+      case "SECTION_B/Rice_loss":
+      case "SECTION_B/Beans_loss":
+      case "SECTION_B/Groundnuts_loss":
+      case "SECTION_B/Irishpotato_loss":
+      case "SECTION_B/Sweetpotato_loss":
+      case "SECTION_B/Cassava_loss":
+      case "SECTION_B/Beef_loss":
+      case "SECTION_B/Vegetable_loss":
+      case "SECTION_B/Fruit_loss":
+      case "SECTION_B/Tomato_loss":
+      case "SECTION_B/Goatmeat_loss":
+      case "SECTION_B/Pork_loss":
+      case "SECTION_B/post_harvest_loss_reasons":
+      case "SECTION_B/food_insecurity":
+      case "SECTION_B/less_dpensive_food":
+      case "SECTION_B/help_from_relatives":
+      case "SECTION_B/limit_portion_size":
+      case "SECTION_B/restrict_consumption":
+      case "SECTION_B/reduce_meal_numbers":
+      case "SECTION_B/livestock":
+      case "SECTION_B/Vet_services":
+      case "SECTION_B/Vet_services_failure":
+      case "SECTION_B/failure_others":
+      case "SECTION_B/Livestock_diseases":
+      case "SECTION_B/farm_inputs":
+      case "SECTION_B/farm_inputs_none":
+      case "SECTION_B/farm_input_none_other":
+      case "_id":
+      case "_uuid":
+      case "_submission_time":
+        return true;
+      default:
+        return false;
+    }
+  }
+
+  private void skipField(JsonParser parser) {
+
+    switch (parser.next()) {
+      case START_ARRAY:
+        // The next token is not a key name
+        log.trace("The next token is a start array");
+        parser.skipArray();
+        break;
+
+      case END_ARRAY:
+        // The next token is not a key name
+        log.trace("The next token is an end array");
+        break;
+
+      case START_OBJECT:
+        // The next token is not a key name
+        log.trace("The next token is a start object");
+        parser.skipObject();
+        break;
+
+      case END_OBJECT:
+        // The next token is not a key name
+        log.trace("The next token is an end object");
+        break;
+
+      case VALUE_FALSE:
+        // The next token is not a key name
+        log.trace("The next token is a value false");
+        break;
+
+      case VALUE_NULL:
+        // The next token is not a key name
+        log.trace("The next token is a value null");
+        break;
+
+      case VALUE_NUMBER:
+        // The next token is not a key name
+        log.trace("The next token is a value number");
+        break;
+
+      case VALUE_STRING:
+        // The next token is not a key name
+        log.trace("The next token is a value string");
+        break;
+
+      case VALUE_TRUE:
+        // The next token is not a key name
+        log.trace("The next token is a value true");
+        break;
+    }
   }
 }
