@@ -1,16 +1,16 @@
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
-  name: {{ .Values.units.ingress.name }}
+  name: {{ .Values.submissions.ingress.name }}
   annotations:
-    kubernetes.io/ingress.class: {{ .Values.units.ingress.class }}
+    kubernetes.io/ingress.class: {{ .Values.submissions.ingress.class }}
 spec:
   rules:
-  - host: {{ .Values.units.ingress.rules.host}}
+  - host: {{ .Values.submissions.ingress.rules.host}}
     http:
       paths:
-      - path: {{ .Values.units.ingress.rules.http.path}}
+      - path: {{ .Values.submissions.ingress.rules.http.path}}
         backend:
-          serviceName: {{ .Values.units.ingress.rules.http.backend.service.name}}
-          servicePort: {{ .Values.units.ingress.rules.http.backend.service.port}}
+          serviceName: {{ .Values.submissions.ingress.rules.http.backend.service.name}}
+          servicePort: {{ .Values.submissions.ingress.rules.http.backend.service.port}}
 

@@ -13,10 +13,8 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 import javax.json.Json;
 import javax.json.stream.JsonParser;
 import javax.json.stream.JsonParser.Event;
@@ -93,9 +91,9 @@ import reactor.core.publisher.FluxSink;
  * @version 1.0
  */
 @RestController
-@RequestMapping("api/v1/submissions")
+@RequestMapping("api/v1/submissions/households/")
 @Slf4j
-public class SubmissionController {
+public class HouseholdsSubmissionsController {
 
   @Autowired Kobo kobo;
 
@@ -105,7 +103,7 @@ public class SubmissionController {
    * @throws ProtocolException
    * @throws IOException
    */
-  @GetMapping(value = "/household_data/all", produces = MediaType.APPLICATION_STREAM_JSON_VALUE)
+  @GetMapping(value = "/all", produces = MediaType.APPLICATION_STREAM_JSON_VALUE)
   public Flux<Object> retrieveAllHouseholdData()
       throws MalformedURLException, ProtocolException, IOException {
 
@@ -146,7 +144,7 @@ public class SubmissionController {
   // <editor-fold defaultstate="collapsed" desc="Get Household Data - Between Two Dates">
 
   @GetMapping(
-      value = "/household_data/from/{from}/to/{to}",
+      value = "/from/{from}/to/{to}",
       produces = MediaType.APPLICATION_STREAM_JSON_VALUE)
   public Flux<Object> retrieveHouseholdDataBetweenGivenDates(
       @PathVariable String from, @PathVariable String to)
@@ -198,7 +196,7 @@ public class SubmissionController {
   // <editor-fold defaultstate="collapsed" desc="Get Household Data - After Date">
 
   @GetMapping(
-      value = "/household_data/after/{after}",
+      value = "/after/{after}",
       produces = MediaType.APPLICATION_STREAM_JSON_VALUE)
   public Flux<Object> retrieveHouseholdDataAfterGivenDate(@PathVariable String after)
       throws MalformedURLException, ProtocolException, IOException {
@@ -250,7 +248,7 @@ public class SubmissionController {
    * @throws ProtocolException
    * @throws IOException
    */
-  @GetMapping(value = "/household_data/all/count", produces = MediaType.APPLICATION_STREAM_JSON_VALUE)
+  @GetMapping(value = "/all/count", produces = MediaType.APPLICATION_STREAM_JSON_VALUE)
   public Flux<Object> countAllHouseholdData()
       throws MalformedURLException, ProtocolException, IOException {
 
@@ -291,7 +289,7 @@ public class SubmissionController {
   // <editor-fold defaultstate="collapsed" desc="Get Household Data Count - Between Two Dates">
 
   @GetMapping(
-      value = "/household_data/from/{from}/to/{to}/count",
+      value = "/from/{from}/to/{to}/count",
       produces = MediaType.APPLICATION_STREAM_JSON_VALUE)
   public Flux<Object> countHouseholdDataBetweenGivenDates(
       @PathVariable String from, @PathVariable String to)
@@ -343,7 +341,7 @@ public class SubmissionController {
   // <editor-fold defaultstate="collapsed" desc="Get Household Data Count - After Date">
 
   @GetMapping(
-      value = "/household_data/after/{after}/count",
+      value = "/after/{after}/count",
       produces = MediaType.APPLICATION_STREAM_JSON_VALUE)
   public Flux<Object> countHouseholdDataAfterGivenDate(@PathVariable String after)
       throws MalformedURLException, ProtocolException, IOException {

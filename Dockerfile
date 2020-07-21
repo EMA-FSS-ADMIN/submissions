@@ -6,5 +6,5 @@ ARG DEPENDENCY
 COPY ${DEPENDENCY}/BOOT-INF/lib /app/lib
 COPY ${DEPENDENCY}/META-INF /app/META-INF
 COPY ${DEPENDENCY}/BOOT-INF/classes /app
-ENTRYPOINT ["java","-cp","app:app/lib/*","-Dpostgres.host=${POSTGRES_HOST}","ke.co.miles.units.Application"]
+ENTRYPOINT ["java","-cp","app:app/lib/*","-Dpostgres.host=${POSTGRES_HOST}","ke.co.miles.submissions.Application"]
 

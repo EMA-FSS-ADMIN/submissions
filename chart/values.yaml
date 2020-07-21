@@ -1,45 +1,42 @@
 # Default values for the Helm Chart.
 # This is a YAML-formatted file.
 
-units:
+submissions:
 
   # Ingress
   ingress:
-    name: units
+    name: submissions
     class: traefik 
     rules:
       host: cloud.emafss.org
       http:
-        path: /api/v1/units
+        path: /api/v1/submissions
         backend:
           service:
-            name: units
+            name: submissions
             port: http
 
   # Service
   service:
-    name: units 
+    name: submissions 
     port:
       default: 80
-      target: 8412
+      target: 8421
 
   # Deployment
   deployment:
-    name: units 
+    name: submissions 
 
   # Application / Application Replicas
   application:
-    name: units
+    name: submissions
     version: 0.0.1
     image: 
-      id: cloud.emafss.org:5043/units
+      id: cloud.emafss.org:5043/submissions
       tag: 0.0.1
       pull:
         policy: Always
         secret: regcred
-    environment: 
-      postgres:
-        host: bitnami-postgres-postgresql
     replicas: 1
 
  

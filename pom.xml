@@ -10,7 +10,7 @@
     <packaging>jar</packaging>
 
     <name>submissions</name>
-    <description>Second Mile Units Microservice</description> 
+    <description>Second Mile Submissions Microservice</description> 
 
     <licenses>
         <license>
@@ -35,8 +35,6 @@
         <java.version>1.8</java.version>
         <docker.image.prefix>cloud.emafss.org:5043</docker.image.prefix>
         <dockerfile-maven-plugin.version>1.4.6</dockerfile-maven-plugin.version>        
-        <davidmoten-rxjava2-jdbc.version>0.2.4</davidmoten-rxjava2-jdbc.version>
-        <davidmoten-guava-mini-version>0.1.2</davidmoten-guava-mini-version>
     </properties> 
 
     <dependencies>
@@ -63,16 +61,6 @@
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <optional>true</optional>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.data</groupId>
-            <artifactId>spring-data-commons</artifactId>
-            <type>jar</type>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-tx</artifactId>
-            <type>jar</type>
         </dependency>
         <!-- https://mvnrepository.com/artifact/javax.json/javax.json-api -->
         <dependency>

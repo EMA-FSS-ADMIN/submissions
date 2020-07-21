@@ -1,12 +1,12 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ .Values.units.service.name }}
+  name: {{ .Values.submissions.service.name }}
 spec:
   ports:
     -
       name: http
-      port: {{ .Values.units.service.port.default }}
-      targetPort: {{ .Values.units.service.port.target }}
+      port: {{ .Values.submissions.service.port.default }}
+      targetPort: {{ .Values.submissions.service.port.target }}
   selector:
-    app: {{ .Values.units.application.name }}
+    app: {{ .Values.submissions.application.name }}
