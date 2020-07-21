@@ -7,19 +7,21 @@
  */
 package ke.co.miles.submissions.controller;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import javax.json.Json;
 import javax.json.stream.JsonParser;
 import javax.json.stream.JsonParser.Event;
-import ke.co.miles.submissions.models.households.HouseholdData;
+import ke.co.miles.submissions.configurations.Kobo;
+import ke.co.miles.submissions.util.databuilders.common.FormBuilder;
 import ke.co.miles.submissions.util.databuilders.households.HouseholdDataBuilder;
 import ke.co.miles.submissions.util.datareaders.households.AbstractHouseholdDataReader;
 import ke.co.miles.submissions.util.datareaders.households.dates.HHDataCollectionDateDataReader;
@@ -76,10 +78,14 @@ import ke.co.miles.submissions.util.datareaders.households.respondents.HHRespond
 import ke.co.miles.submissions.util.datareaders.households.respondents.HHRespondentsNameDataReader;
 import ke.co.miles.submissions.util.datareaders.households.respondents.HHRespondentsSexDataCollectorDataReader;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Flux;
+import reactor.core.publisher.FluxSink;
 
 /**
  * @since 0.0.1
@@ -91,29 +97,361 @@ import reactor.core.publisher.Flux;
 @Slf4j
 public class SubmissionController {
 
+  @Autowired Kobo kobo;
+
+  // <editor-fold defaultstate="collapsed" desc="Get Household Data - All">
   /**
    * @return @throws MalformedURLException
    * @throws ProtocolException
    * @throws IOException
    */
-  @GetMapping("/household_data")
-  public Flux<HouseholdData> retrieveHouseholdData()
+  @GetMapping(value = "/household_data/all", produces = MediaType.APPLICATION_STREAM_JSON_VALUE)
+  public Flux<Object> retrieveAllHouseholdData()
       throws MalformedURLException, ProtocolException, IOException {
 
-    // URL url = new
-    // URL("https://kobo.humanitarianresponse.info/api/v2/assets/aD5ktiL9TmwnQ83tovyvXW/data.json");
-    URL url = new URL("https://www.miles.co.ke/household.json");
+    // Create a Flux with the capability of emitting multiple household data in a synchronous or
+    // asynchronous manner through the FluxSink API
+    return Flux.create(
+            fluxSinkEmitter -> {
+              kobo.getHouseholdFormsUids().stream()
+                  .forEach(
+                      (String form) -> {
+                        try {
+
+                          log.trace("Processing new form");
+                          log.debug("Form Id = {}", form);
+
+                          // Connect to the Data Server
+                          URL url = new URL(kobo.getBaseAssetsURL() + "/" + form + "/data.json");
+
+                          // Connect, read and stream the results
+                          readAndStreamResults(getConnection(url), fluxSinkEmitter);
+
+                        } catch (MalformedURLException ex) {
+                          log.error("Malformed URL", ex);
+                          log.debug("URL = " + kobo.getBaseAssetsURL() + "/" + form + "/data.json");
+                        } catch (ProtocolException ex) {
+                          log.error("Protocol Exception", ex);
+                        } catch (IOException ex) {
+                          log.error("IO Exception", ex);
+                        }
+                      });
+            })
+        .publish()
+        .autoConnect();
+  }
+
+  // </editor-fold>
+
+  // <editor-fold defaultstate="collapsed" desc="Get Household Data - Between Two Dates">
+
+  @GetMapping(
+      value = "/household_data/from/{from}/to/{to}",
+      produces = MediaType.APPLICATION_STREAM_JSON_VALUE)
+  public Flux<Object> retrieveHouseholdDataBetweenGivenDates(
+      @PathVariable String from, @PathVariable String to)
+      throws MalformedURLException, ProtocolException, IOException {
+
+    // Create a Flux with the capability of emitting multiple household data in a synchronous or
+    // asynchronous manner through the FluxSink API
+    return Flux.create(
+            fluxSinkEmitter -> {
+              kobo.getHouseholdFormsUids().stream()
+                  .forEach(
+                      (String form) -> {
+                        try {
+
+                          log.trace("Processing new form");
+                          log.debug("Form Id = {}", form);
+
+                          // Connect to the Data Server
+                          URL url =
+                              new URL(
+                                  kobo.getBaseAssetsURL()
+                                      + "/"
+                                      + form
+                                      + "/data.json?query={\"_submission_time\": {\"$gt\": \""
+                                      + from
+                                      + "\",\"$lt\": \""
+                                      + to
+                                      + "\"}}");
+
+                          // Connect, read and stream the results
+                          readAndStreamResults(getConnection(url), fluxSinkEmitter);
+
+                        } catch (MalformedURLException ex) {
+                          log.error("Malformed URL", ex);
+                          log.debug("URL = " + kobo.getBaseAssetsURL() + "/" + form + "/data.json");
+                        } catch (ProtocolException ex) {
+                          log.error("Protocol Exception", ex);
+                        } catch (IOException ex) {
+                          log.error("IO Exception", ex);
+                        }
+                      });
+            })
+        .publish()
+        .autoConnect();
+  }
+
+  // </editor-fold>
+
+  // <editor-fold defaultstate="collapsed" desc="Get Household Data - After Date">
+
+  @GetMapping(
+      value = "/household_data/after/{after}",
+      produces = MediaType.APPLICATION_STREAM_JSON_VALUE)
+  public Flux<Object> retrieveHouseholdDataAfterGivenDate(@PathVariable String after)
+      throws MalformedURLException, ProtocolException, IOException {
+
+    // Create a Flux with the capability of emitting multiple household data in a synchronous or
+    // asynchronous manner through the FluxSink API
+    return Flux.create(
+            fluxSinkEmitter -> {
+              kobo.getHouseholdFormsUids().stream()
+                  .forEach(
+                      (String form) -> {
+                        try {
+
+                          log.trace("Processing new form");
+                          log.debug("Form Id = {}", form);
+
+                          // Connect to the Data Server
+                          URL url =
+                              new URL(
+                                  kobo.getBaseAssetsURL()
+                                      + "/"
+                                      + form
+                                      + "/data.json?query={\"_submission_time\": {\"$gt\": \""
+                                      + after
+                                      + "\"}}");
+
+                          // Connect, read and stream the results
+                          readAndStreamResults(getConnection(url), fluxSinkEmitter);
+
+                        } catch (MalformedURLException ex) {
+                          log.error("Malformed URL", ex);
+                          log.debug("URL = " + kobo.getBaseAssetsURL() + "/" + form + "/data.json");
+                        } catch (ProtocolException ex) {
+                          log.error("Protocol Exception", ex);
+                        } catch (IOException ex) {
+                          log.error("IO Exception", ex);
+                        }
+                      });
+            })
+        .publish()
+        .autoConnect();
+  }
+
+  // </editor-fold>
+
+  // <editor-fold defaultstate="collapsed" desc="Get Household Data Count - All">
+  /**
+   * @return @throws MalformedURLException
+   * @throws ProtocolException
+   * @throws IOException
+   */
+  @GetMapping(value = "/household_data/all/count", produces = MediaType.APPLICATION_STREAM_JSON_VALUE)
+  public Flux<Object> countAllHouseholdData()
+      throws MalformedURLException, ProtocolException, IOException {
+
+    // Create a Flux with the capability of emitting multiple household data in a synchronous or
+    // asynchronous manner through the FluxSink API
+    return Flux.create(
+            fluxSinkEmitter -> {
+              kobo.getHouseholdFormsUids().stream()
+                  .forEach(
+                      (String form) -> {
+                        try {
+
+                          log.trace("Processing new form");
+                          log.debug("Form Id = {}", form);
+
+                          // Connect to the Data Server
+                          URL url = new URL(kobo.getBaseAssetsURL() + "/" + form + "/data.json");
+
+                          // Connect, read and stream the results
+                          readAndStreamResultsCount(getConnection(url), fluxSinkEmitter, form);
+
+                        } catch (MalformedURLException ex) {
+                          log.error("Malformed URL", ex);
+                          log.debug("URL = " + kobo.getBaseAssetsURL() + "/" + form + "/data.json");
+                        } catch (ProtocolException ex) {
+                          log.error("Protocol Exception", ex);
+                        } catch (IOException ex) {
+                          log.error("IO Exception", ex);
+                        }
+                      });
+            })
+        .publish()
+        .autoConnect();
+  }
+
+  // </editor-fold>
+
+  // <editor-fold defaultstate="collapsed" desc="Get Household Data Count - Between Two Dates">
+
+  @GetMapping(
+      value = "/household_data/from/{from}/to/{to}/count",
+      produces = MediaType.APPLICATION_STREAM_JSON_VALUE)
+  public Flux<Object> countHouseholdDataBetweenGivenDates(
+      @PathVariable String from, @PathVariable String to)
+      throws MalformedURLException, ProtocolException, IOException {
+
+    // Create a Flux with the capability of emitting multiple household data in a synchronous or
+    // asynchronous manner through the FluxSink API
+    return Flux.create(
+            fluxSinkEmitter -> {
+              kobo.getHouseholdFormsUids().stream()
+                  .forEach(
+                      (String form) -> {
+                        try {
+
+                          log.trace("Processing new form");
+                          log.debug("Form Id = {}", form);
+
+                          // Connect to the Data Server
+                          URL url =
+                              new URL(
+                                  kobo.getBaseAssetsURL()
+                                      + "/"
+                                      + form
+                                      + "/data.json?query={\"_submission_time\": {\"$gt\": \""
+                                      + from
+                                      + "\",\"$lt\": \""
+                                      + to
+                                      + "\"}}");
+
+                          // Connect, read and stream the results
+                          readAndStreamResultsCount(getConnection(url), fluxSinkEmitter, form);
+
+                        } catch (MalformedURLException ex) {
+                          log.error("Malformed URL", ex);
+                          log.debug("URL = " + kobo.getBaseAssetsURL() + "/" + form + "/data.json");
+                        } catch (ProtocolException ex) {
+                          log.error("Protocol Exception", ex);
+                        } catch (IOException ex) {
+                          log.error("IO Exception", ex);
+                        }
+                      });
+            })
+        .publish()
+        .autoConnect();
+  }
+
+  // </editor-fold>
+
+  // <editor-fold defaultstate="collapsed" desc="Get Household Data Count - After Date">
+
+  @GetMapping(
+      value = "/household_data/after/{after}/count",
+      produces = MediaType.APPLICATION_STREAM_JSON_VALUE)
+  public Flux<Object> countHouseholdDataAfterGivenDate(@PathVariable String after)
+      throws MalformedURLException, ProtocolException, IOException {
+
+    // Create a Flux with the capability of emitting multiple household data in a synchronous or
+    // asynchronous manner through the FluxSink API
+    return Flux.create(
+            fluxSinkEmitter -> {
+              kobo.getHouseholdFormsUids().stream()
+                  .forEach(
+                      (String form) -> {
+                        try {
+
+                          log.trace("Processing new form");
+                          log.debug("Form Id = {}", form);
+
+                          // Connect to the Data Server
+                          URL url =
+                              new URL(
+                                  kobo.getBaseAssetsURL()
+                                      + "/"
+                                      + form
+                                      + "/data.json?query={\"_submission_time\": {\"$gt\": \""
+                                      + after
+                                      + "\"}}");
+
+                          // Connect, read and stream the results
+                          readAndStreamResultsCount(getConnection(url), fluxSinkEmitter, form);
+
+                        } catch (MalformedURLException ex) {
+                          log.error("Malformed URL", ex);
+                          log.debug("URL = " + kobo.getBaseAssetsURL() + "/" + form + "/data.json");
+                        } catch (ProtocolException ex) {
+                          log.error("Protocol Exception", ex);
+                        } catch (IOException ex) {
+                          log.error("IO Exception", ex);
+                        }
+                      });
+            })
+        .publish()
+        .autoConnect();
+  }
+
+  // </editor-fold>
+
+  // <editor-fold defaultstate="collapsed" desc="Utilities">
+
+  private HttpURLConnection getConnection(URL url) throws ProtocolException, IOException {
     HttpURLConnection con = (HttpURLConnection) url.openConnection();
+    con.setRequestProperty("Authorization", "Token " + kobo.getAccessToken());
     con.setRequestProperty("Accept", "application/json");
-    // con.setRequestProperty("Authorization", "Token 8ba6b71b00354818eebc7384d6c4e4f8a5bc2b26");
     con.setRequestMethod("GET");
 
-    int totalResults = 0;
-    int readResults = 0;
+    // HttpURLConnection con = (HttpURLConnection) url.openConnection();
+    // con.setRequestProperty("Accept", "application/json");
+    // con.setRequestMethod("GET");
+
+    return con;
+  }
+
+  private void readAndStreamResultsCount(
+      HttpURLConnection con, FluxSink<Object> fluxSinkEmitter, String formUId) {
+
+    Integer count = null;
     try (InputStream is = con.getInputStream();
         JsonParser parser = Json.createParser(is)) {
+      Event e;
+      outer:
       while (parser.hasNext()) {
-        Event e = parser.next();
+
+        e = parser.next();
+
+        if (e == Event.KEY_NAME) {
+
+          switch (parser.getString()) {
+            case "count":
+
+              // Get the next token
+              e = parser.next();
+
+              // The next token should be an integral value token
+              // It represents the total count of results
+              // Use it to initialize the totalResults value
+              if (e == Event.VALUE_NUMBER) {
+                count = parser.getInt();
+              }
+              break outer;
+          }
+        }
+      }
+
+      // Stream the data
+      fluxSinkEmitter.next(new FormBuilder().uid(formUId).recordCount(count).build());
+			
+    } catch (IOException ex) {
+      log.error("Could not successfully connect to submissions server", ex);
+    }
+  }
+
+  private void readAndStreamResults(HttpURLConnection con, FluxSink<Object> fluxSinkEmitter) {
+
+    int totalResults = 0;
+    int processedResults = 0;
+    try (InputStream is = con.getInputStream();
+        JsonParser parser = Json.createParser(is)) {
+      Event e;
+      while (parser.hasNext()) {
+        e = parser.next();
         if (e == Event.KEY_NAME) {
           switch (parser.getString()) {
             case "count":
@@ -141,7 +479,7 @@ public class SubmissionController {
 
                 // There are results to read
                 log.trace("There are results to read");
-                log.debug("Results = {}", totalResults);
+                log.info("Total Results = {}", totalResults);
 
                 // Get the next token
                 log.trace("Getting the next token");
@@ -164,7 +502,7 @@ public class SubmissionController {
                   AbstractHouseholdDataReader dataReader;
                   HouseholdDataBuilder hdb;
 
-                  for (int i = 0; i < 2; i++) {
+                  for (int i = 0; i < totalResults; i++) {
 
                     // Check if the current token is the start of an object
                     log.trace("Checking if the current token is the start of an object");
@@ -190,13 +528,13 @@ public class SubmissionController {
                       log.trace("Getting the next token");
                       e = parser.next();
 
+                      // Log the current token
+                      logToken(e);
+
                       do {
 
                         switch (e) {
                           case KEY_NAME:
-
-                            // The next token is a key name
-                            log.trace("The next token is a key name");
                             log.debug("Key = {}", parser.getString());
 
                             if (!isHHFieldRequired(parser.getString()) || !dataReader.read(hdb)) {
@@ -205,55 +543,14 @@ public class SubmissionController {
                               log.warn("Data is not required or could not be read");
 
                               // Skip Field
-                              skipField(parser);
+                              skipHHField(parser);
                             }
 
                             // Move to next
                             e = parser.next();
                             break;
-                          case END_ARRAY:
-                            // The next token is not a key name
-                            log.trace("The next token is an end array");
-                            done = true;
-                            break;
-                          case END_OBJECT:
-                            // The next token is not a key name
-                            log.trace("The next token is an end object");
-                            done = true;
-                            break;
-                          case START_ARRAY:
-                            // The next token is not a key name
-                            log.trace("The next token is a start array");
-                            done = true;
-                            break;
-                          case START_OBJECT:
-                            // The next token is not a key name
-                            log.trace("The next token is a start object");
-                            done = true;
-                            break;
-                          case VALUE_FALSE:
-                            // The next token is not a key name
-                            log.trace("The next token is a value false");
-                            done = true;
-                            break;
-                          case VALUE_NULL:
-                            // The next token is not a key name
-                            log.trace("The next token is a value null");
-                            done = true;
-                            break;
-                          case VALUE_NUMBER:
-                            // The next token is not a key name
-                            log.trace("The next token is a value number");
-                            done = true;
-                            break;
-                          case VALUE_STRING:
-                            // The next token is not a key name
-                            log.trace("The next token is a value string");
-                            done = true;
-                            break;
-                          case VALUE_TRUE:
-                            // The next token is not a key name
-                            log.trace("The next token is a value true");
+
+                          default:
                             done = true;
                             break;
                         }
@@ -261,20 +558,22 @@ public class SubmissionController {
                       } while (!done);
 
                       // Stream the data
-                      System.out.println(new ObjectMapper().writeValueAsString(hdb.build()));
-                      System.out.println("Read Results = " + ++readResults);
-                      System.out.println("--------------------------------");
+                      fluxSinkEmitter.next(hdb.build());
+
+                      // Increment the processed results
+                      processedResults += 1;
+                      log.info("Processed {} of {}", processedResults, totalResults);
                     }
 
-                    // Check if there is another object
-                    log.trace("Checking if there is another object");
+                    // Check if there is another token
+                    log.trace("Checking if there is another token");
                     if (parser.hasNext()) {
 
-                      // There is another object
-                      log.trace("There is another object");
-											
-                      // Move to the next object
-                      log.trace("Moving to the next object");											
+                      // There is another token
+                      log.trace("There is another token");
+
+                      // Move to the next token
+                      log.trace("Moving to the next token");
                       e = parser.next();
                     }
                   }
@@ -283,9 +582,9 @@ public class SubmissionController {
           }
         }
       }
+    } catch (IOException ex) {
+      log.error("Could not successfully connect to submissions server", ex);
     }
-
-    return Flux.empty();
   }
 
   private AbstractHouseholdDataReader initializeDataProcessingChain(JsonParser parser) {
@@ -558,55 +857,69 @@ public class SubmissionController {
     }
   }
 
-  private void skipField(JsonParser parser) {
+  private void skipHHField(JsonParser parser) {
 
     switch (parser.next()) {
       case START_ARRAY:
-        // The next token is not a key name
-        log.trace("The next token is a start array");
         parser.skipArray();
         break;
 
-      case END_ARRAY:
-        // The next token is not a key name
-        log.trace("The next token is an end array");
-        break;
-
       case START_OBJECT:
-        // The next token is not a key name
-        log.trace("The next token is a start object");
         parser.skipObject();
         break;
 
-      case END_OBJECT:
+      default:
         // The next token is not a key name
         log.trace("The next token is an end object");
         break;
+    }
+  }
 
-      case VALUE_FALSE:
-        // The next token is not a key name
-        log.trace("The next token is a value false");
+  private void logToken(Event e) {
+
+    switch (e) {
+      case KEY_NAME:
+        log.trace("The current token is a key name");
+        break;
+
+      case START_ARRAY:
+        log.trace("The current token is a start array");
+        break;
+
+      case END_ARRAY:
+        log.trace("The current token is an end array");
+        break;
+
+      case START_OBJECT:
+        log.trace("The current token is a start object");
+        break;
+
+      case END_OBJECT:
+        log.trace("The current token is an end object");
         break;
 
       case VALUE_NULL:
-        // The next token is not a key name
-        log.trace("The next token is a value null");
+        log.trace("The current token is a value null");
         break;
 
       case VALUE_NUMBER:
-        // The next token is not a key name
-        log.trace("The next token is a value number");
+        log.trace("The current token is a value number");
         break;
 
       case VALUE_STRING:
-        // The next token is not a key name
-        log.trace("The next token is a value string");
+        log.trace("The current token is a value string");
         break;
 
       case VALUE_TRUE:
-        // The next token is not a key name
-        log.trace("The next token is a value true");
+        log.trace("The current token is a value true");
+        break;
+
+      case VALUE_FALSE:
+        log.trace("The current token is a value false");
         break;
     }
   }
+
+  // </editor-fold>
+
 }
