@@ -213,7 +213,10 @@ public class HouseholdsSubmissionsController {
                           log.trace("Processing new form");
                           log.debug("Form Id = {}", form);
 
-                          // Connect to the Data Server
+                          // Connect to the Test Data Server
+													//URL url = new URL("https://www.miles.co.ke/household.json");
+
+													// Connect to the Live Data Server
                           URL url =
                               new URL(
                                   kobo.getBaseAssetsURL()
@@ -222,6 +225,8 @@ public class HouseholdsSubmissionsController {
                                       + "/data.json?query={\"_submission_time\": {\"$gt\": \""
                                       + after
                                       + "\"}}");
+													
+
 
                           // Connect, read and stream the results
                           readAndStreamResults(getConnection(url), fluxSinkEmitter);
@@ -358,7 +363,10 @@ public class HouseholdsSubmissionsController {
                           log.trace("Processing new form");
                           log.debug("Form Id = {}", form);
 
-                          // Connect to the Data Server
+                          // Connect to the Test Data Server
+													//URL url = new URL("https://www.miles.co.ke/household.json");
+
+													// Connect to the Live Data Server
                           URL url =
                               new URL(
                                   kobo.getBaseAssetsURL()

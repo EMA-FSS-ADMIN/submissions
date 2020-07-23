@@ -1,9 +1,9 @@
-# Units
+# Submissions
 
-This repository contains all the source code artifacts needed to set up and 
-manage Units Records.
+This repository contains all the source code artifacts needed to stream 
+submitted data from Kobo Collect's Server. This service first converts the data 
+into a standard format that is most appropriate for the projects operations 
+before streaming it.
 
-Units Records represents the units of measurements used in the observations e.g 
-days, years, percentages, etc.
 
 

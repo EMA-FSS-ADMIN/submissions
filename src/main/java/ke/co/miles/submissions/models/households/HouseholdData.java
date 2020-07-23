@@ -7,15 +7,14 @@
  */
 package ke.co.miles.submissions.models.households;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import ke.co.miles.submissions.models.enumerators.Enumerator;
 import ke.co.miles.submissions.models.households.heads.HouseholdHead;
 import ke.co.miles.submissions.models.observation.QuantitativeObservation;
 import ke.co.miles.submissions.models.observation.Phenomenon;
 import ke.co.miles.submissions.models.households.locations.HouseholdLocation;
 import ke.co.miles.submissions.models.households.respondents.HouseholdSurveyRespondent;
+import ke.co.miles.submissions.util.KeyValueContainer;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -40,11 +39,6 @@ public class HouseholdData {
     private HouseholdLocation location;
     private List<Phenomenon> categoricalObservations;
     private List<QuantitativeObservation> quantitativeObservations;
-		private Map<Phenomenon, String> notes;
-    
-    {
-        categoricalObservations = new ArrayList<>();
-        quantitativeObservations = new ArrayList<>();
-    }    
+		private List<KeyValueContainer<Phenomenon, String>> notes;  
 
 }

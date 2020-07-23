@@ -15,6 +15,7 @@ import ke.co.miles.submissions.models.households.HouseholdData;
 import ke.co.miles.submissions.models.households.locations.HouseholdLocation;
 import ke.co.miles.submissions.models.observation.QuantitativeObservation;
 import ke.co.miles.submissions.models.observation.Phenomenon;
+import ke.co.miles.submissions.util.ObjectUtils;
 import ke.co.miles.submissions.util.databuilders.households.members.HHMembersQuantitativeObservationsBuilder;
 import ke.co.miles.submissions.util.databuilders.common.enumerators.EnumeratorBuilder;
 import ke.co.miles.submissions.util.databuilders.households.heads.HHHeadBuilder;
@@ -604,7 +605,7 @@ public class HouseholdDataBuilder {
     hd.setQuantitativeObservations(getQuantitativeObservations());
 
     // Notes
-    hd.setNotes(notes);
+    hd.setNotes(ObjectUtils.toList(notes)); 
 
     return hd;
   }
