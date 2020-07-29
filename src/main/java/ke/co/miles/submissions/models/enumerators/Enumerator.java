@@ -25,6 +25,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class Enumerator {
     
+	  private Integer partyId;
     private String name;
     private String phone;
     private List<Phenomenon> categoricalObservations;

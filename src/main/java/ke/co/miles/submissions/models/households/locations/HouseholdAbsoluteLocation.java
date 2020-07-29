@@ -7,6 +7,7 @@
  */
 package ke.co.miles.submissions.models.households.locations;
 
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -21,6 +22,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class HouseholdAbsoluteLocation {
-    private Double latitude;
-    private Double longitude;
+    private String type;
+    private List<Double> coordinates;
 }

@@ -8,6 +8,7 @@
 package ke.co.miles.submissions.util.databuilders.households.locations;
 
 
+import java.util.Arrays;
 import ke.co.miles.submissions.models.households.locations.HouseholdAbsoluteLocation;
 import lombok.extern.slf4j.Slf4j;
 
@@ -22,17 +23,7 @@ public class HHAbsoluteLocationBuilder {
     
     private Double latitude;
     private Double longitude;
-    
-    
-    
-    public HHAbsoluteLocationBuilder init(HouseholdAbsoluteLocation householdAbsoluteLocation) {
-        
-        if(householdAbsoluteLocation != null) {
-            this.latitude = householdAbsoluteLocation.getLatitude();
-            this.longitude = householdAbsoluteLocation.getLongitude();
-        }
-        return this;
-    }
+
     
     public HHAbsoluteLocationBuilder latitude(Double latitude) {
         this.latitude = latitude;
@@ -104,6 +95,6 @@ public class HHAbsoluteLocationBuilder {
     }    
     
     public HouseholdAbsoluteLocation build(){
-        return new HouseholdAbsoluteLocation(latitude, longitude);
+        return new HouseholdAbsoluteLocation("Point", Arrays.asList(new Double[]{latitude,longitude}));
     }
 }
