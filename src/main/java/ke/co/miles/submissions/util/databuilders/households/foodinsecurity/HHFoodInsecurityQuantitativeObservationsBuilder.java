@@ -10,8 +10,8 @@ package ke.co.miles.submissions.util.databuilders.households.foodinsecurity;
 
 import java.util.ArrayList;
 import java.util.List;
-import ke.co.miles.submissions.models.observation.QuantitativeObservation;
-import ke.co.miles.submissions.util.databuilders.common.observations.QuantitativeObservationBuilder;
+import ke.co.miles.submissions.models.observation.Measurement;
+import ke.co.miles.submissions.util.databuilders.common.observations.MeasurementBuilder;
 import ke.co.miles.submissions.util.common.observations.PhenomenonTypeEnum;
 import ke.co.miles.submissions.util.common.observations.UnitEnum;
 import lombok.extern.slf4j.Slf4j;
@@ -96,11 +96,11 @@ public class HHFoodInsecurityQuantitativeObservationsBuilder {
     return this;
   }
 
-  public List<QuantitativeObservation> build() {
+  public List<Measurement> build() {
 
-    List<QuantitativeObservation> quantitativeObservations = new ArrayList<>();
+    List<Measurement> quantitativeObservations = new ArrayList<>();
 
-    quantitativeObservations.add(new QuantitativeObservationBuilder()
+    quantitativeObservations.add(new MeasurementBuilder()
             .phenomenonType(
                 PhenomenonTypeEnum
                     .LENGTH_OF_TIME_HH_HAD_TO_RELY_ON_LESS_PREFERRED_AND_LESS_EXPENSIVE_FOOD)
@@ -108,7 +108,7 @@ public class HHFoodInsecurityQuantitativeObservationsBuilder {
             .unit(UnitEnum.DAYS)
             .build());
 
-    quantitativeObservations.add(new QuantitativeObservationBuilder()
+    quantitativeObservations.add(new MeasurementBuilder()
             .phenomenonType(
                 PhenomenonTypeEnum
                     .LENGTH_OF_TIME_HH_HAD_TO_BORROW_FOOD_OR_RELY_ON_HELP_FROM_A_FRIEND_OR_RELATIVE)
@@ -116,14 +116,14 @@ public class HHFoodInsecurityQuantitativeObservationsBuilder {
             .unit(UnitEnum.DAYS)
             .build());
 
-    quantitativeObservations.add(new QuantitativeObservationBuilder()
+    quantitativeObservations.add(new MeasurementBuilder()
             .phenomenonType(
                 PhenomenonTypeEnum.LENGTH_OF_TIME_HH_HAD_TO_LIMIT_PORTION_SIZE_AT_MEAL_TIMES)
             .value(daysOnLimitedPortionSizeAtMealTimes)
             .unit(UnitEnum.DAYS)
             .build());
 
-    quantitativeObservations.add(new QuantitativeObservationBuilder()
+    quantitativeObservations.add(new MeasurementBuilder()
             .phenomenonType(
                 PhenomenonTypeEnum
                     .LENGTH_OF_TIME_HH_HAD_TO_RESTRICT_CONSUMPTION_BY_ADULTS_IN_ORDER_FOR_SMALL_CHILDREN_TO_EAT)
@@ -131,7 +131,7 @@ public class HHFoodInsecurityQuantitativeObservationsBuilder {
             .unit(UnitEnum.DAYS)
             .build());
 
-    quantitativeObservations.add(new QuantitativeObservationBuilder()
+    quantitativeObservations.add(new MeasurementBuilder()
             .phenomenonType(
                 PhenomenonTypeEnum.LENGTH_OF_TIME_HH_HAD_TO_REDUCE_NUMBER_OF_MEALS_EATEN_IN_A_DAY)
             .value(daysOnReducedNumberOfMealsEatenInADay)

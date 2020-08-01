@@ -10,8 +10,8 @@ package ke.co.miles.submissions.util.databuilders.households.members;
 
 import java.util.ArrayList;
 import java.util.List;
-import ke.co.miles.submissions.models.observation.QuantitativeObservation;
-import ke.co.miles.submissions.util.databuilders.common.observations.QuantitativeObservationBuilder;
+import ke.co.miles.submissions.models.observation.Measurement;
+import ke.co.miles.submissions.util.databuilders.common.observations.MeasurementBuilder;
 import ke.co.miles.submissions.util.common.observations.PhenomenonTypeEnum;
 import ke.co.miles.submissions.util.common.observations.UnitEnum;
 import lombok.extern.slf4j.Slf4j;
@@ -69,23 +69,23 @@ public class HHMembersQuantitativeObservationsBuilder {
     return this;
   }
 
-  public List<QuantitativeObservation> build() {
+  public List<Measurement> build() {
 
-    List<QuantitativeObservation> quantitativeObservations = new ArrayList<>();
+    List<Measurement> quantitativeObservations = new ArrayList<>();
 
-    quantitativeObservations.add(new QuantitativeObservationBuilder()
+    quantitativeObservations.add(new MeasurementBuilder()
                 .phenomenonType(PhenomenonTypeEnum.HH_MALE_MEMBERS)
                 .value(maleMembers)
                 .unit(UnitEnum.PEOPLE)
                 .build());
 
-    quantitativeObservations.add(new QuantitativeObservationBuilder()
+    quantitativeObservations.add(new MeasurementBuilder()
                 .phenomenonType(PhenomenonTypeEnum.HH_FEMALE_MEMBERS)
                 .value(femaleMembers)
                 .unit(UnitEnum.PEOPLE)
                 .build());
 		
-    quantitativeObservations.add(new QuantitativeObservationBuilder()
+    quantitativeObservations.add(new MeasurementBuilder()
                 .phenomenonType(PhenomenonTypeEnum.HH_TOTAL_MEMBERS)
                 .value(totalMembers)
                 .unit(UnitEnum.PEOPLE)

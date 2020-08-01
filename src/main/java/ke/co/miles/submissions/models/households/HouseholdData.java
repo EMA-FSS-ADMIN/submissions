@@ -10,7 +10,7 @@ package ke.co.miles.submissions.models.households;
 import java.util.List;
 import ke.co.miles.submissions.models.enumerators.Enumerator;
 import ke.co.miles.submissions.models.households.heads.HouseholdHead;
-import ke.co.miles.submissions.models.observation.QuantitativeObservation;
+import ke.co.miles.submissions.models.observation.Measurement;
 import ke.co.miles.submissions.models.observation.Phenomenon;
 import ke.co.miles.submissions.models.households.locations.HouseholdLocation;
 import ke.co.miles.submissions.models.households.respondents.HouseholdSurveyRespondent;
@@ -38,7 +38,7 @@ public class HouseholdData {
     private HouseholdHead head;
     private HouseholdLocation location;
     private List<Phenomenon> categoricalObservations;
-    private List<QuantitativeObservation> quantitativeObservations;
+    private List<Measurement> quantitativeObservations;
 		private List<KeyValueContainer<Phenomenon, String>> notes;  
 
 }

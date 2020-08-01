@@ -20,7 +20,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class QuantitativeObservation {
+public class Measurement {
     private Integer phenomenonTypeId;
     private String phenomenonType;    
     private Number value;

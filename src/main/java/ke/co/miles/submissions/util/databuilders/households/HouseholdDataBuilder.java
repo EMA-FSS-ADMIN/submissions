@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Map;
 import ke.co.miles.submissions.models.households.HouseholdData;
 import ke.co.miles.submissions.models.households.locations.HouseholdLocation;
-import ke.co.miles.submissions.models.observation.QuantitativeObservation;
+import ke.co.miles.submissions.models.observation.Measurement;
 import ke.co.miles.submissions.models.observation.Phenomenon;
 import ke.co.miles.submissions.util.ObjectUtils;
 import ke.co.miles.submissions.util.databuilders.households.members.HHMembersQuantitativeObservationsBuilder;
@@ -556,16 +556,16 @@ public class HouseholdDataBuilder {
     return categoricalObservations;
   }
 
-  private List<QuantitativeObservation> getQuantitativeObservations() {
+  private List<Measurement> getQuantitativeObservations() {
 
-    List<QuantitativeObservation> quantitativeObservations = new ArrayList<>();
+    List<Measurement> measurements = new ArrayList<>();
 
     // Household Members
-    quantitativeObservations.addAll(householdMembersQuantitativeObservationsBuilder.build());
+    measurements.addAll(householdMembersQuantitativeObservationsBuilder.build());
 
     // Food Insecurity
-    quantitativeObservations.addAll(foodInsecurityQuantitativeObservationsBuilder.build());
-    return quantitativeObservations;
+    measurements.addAll(foodInsecurityQuantitativeObservationsBuilder.build());
+    return measurements;
   }
 	
 	// </editor-fold>

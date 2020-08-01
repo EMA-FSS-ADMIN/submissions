@@ -9,7 +9,7 @@ package ke.co.miles.submissions.models.households.respondents;
 
 import java.util.ArrayList;
 import java.util.List;
-import ke.co.miles.submissions.models.observation.QuantitativeObservation;
+import ke.co.miles.submissions.models.observation.Measurement;
 import ke.co.miles.submissions.models.observation.Phenomenon;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -28,7 +28,7 @@ public class HouseholdSurveyRespondent {
     
     private String name;
     private List<Phenomenon> categoricalObservations;
-    private List<QuantitativeObservation> quantitativeObservations;
+    private List<Measurement> quantitativeObservations;
     
     {
         categoricalObservations = new ArrayList<>();

@@ -10,9 +10,9 @@ package ke.co.miles.submissions.util.databuilders.households.respondents;
 import java.util.ArrayList;
 import java.util.List;
 import ke.co.miles.submissions.models.households.respondents.HouseholdSurveyRespondent;
-import ke.co.miles.submissions.models.observation.QuantitativeObservation;
+import ke.co.miles.submissions.models.observation.Measurement;
 import ke.co.miles.submissions.models.observation.Phenomenon;
-import ke.co.miles.submissions.util.databuilders.common.observations.QuantitativeObservationBuilder;
+import ke.co.miles.submissions.util.databuilders.common.observations.MeasurementBuilder;
 import ke.co.miles.submissions.util.databuilders.common.observations.PhenomenonBuilder;
 import ke.co.miles.submissions.util.common.observations.PhenomenonEnum;
 import ke.co.miles.submissions.util.common.observations.PhenomenonTypeEnum;
@@ -28,7 +28,7 @@ public class HHSurveyRespondentBuilder {
 
   private String name;
   private List<Phenomenon> categoricalObservations;
-  private List<QuantitativeObservation> quantitativeObservations;
+  private List<Measurement> quantitativeObservations;
 
   {
     categoricalObservations = new ArrayList<>();
@@ -83,8 +83,7 @@ public class HHSurveyRespondentBuilder {
     }
 
     if (age != null) {
-      quantitativeObservations.add(
-          new QuantitativeObservationBuilder()
+      quantitativeObservations.add(new MeasurementBuilder()
               .phenomenonTypeId(PhenomenonTypeEnum.HH_SURVEY_RESPONDENTS_AGE.getId())
               .phenomenonType(PhenomenonTypeEnum.HH_SURVEY_RESPONDENTS_AGE.getName())
               .value(age)

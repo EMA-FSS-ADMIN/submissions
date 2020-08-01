@@ -7,7 +7,7 @@
  */
 package ke.co.miles.submissions.util.databuilders.common.observations;
 
-import ke.co.miles.submissions.models.observation.QuantitativeObservation;
+import ke.co.miles.submissions.models.observation.Measurement;
 import ke.co.miles.submissions.models.observation.Unit;
 import ke.co.miles.submissions.util.common.observations.PhenomenonTypeEnum;
 import ke.co.miles.submissions.util.common.observations.UnitEnum;
@@ -18,24 +18,24 @@ import ke.co.miles.submissions.util.common.observations.UnitEnum;
  * @author Kwaje Anthony <tony@miles.co.ke>
  * @version 1.0
  */
-public class QuantitativeObservationBuilder {
+public class MeasurementBuilder {
 
     private int phenomenonTypeId;
     private String phenomenonType;    
     private Number value;
     private Unit unit;
     
-    public QuantitativeObservationBuilder phenomenonTypeId(int phenomenonTypeId){
+    public MeasurementBuilder phenomenonTypeId(int phenomenonTypeId){
         this.phenomenonTypeId = phenomenonTypeId;
         return this;
     }   
     
-    public QuantitativeObservationBuilder phenomenonType(String phenomenonType){
+    public MeasurementBuilder phenomenonType(String phenomenonType){
         this.phenomenonType = phenomenonType;
         return this;
     }
     
-    public QuantitativeObservationBuilder phenomenonType(PhenomenonTypeEnum p){
+    public MeasurementBuilder phenomenonType(PhenomenonTypeEnum p){
         if(p != null) {
            this.phenomenonTypeId = p.getId(); 
            this.phenomenonType = p.getName();
@@ -44,12 +44,12 @@ public class QuantitativeObservationBuilder {
         return this;
     }    
     
-    public QuantitativeObservationBuilder value(Number value){
+    public MeasurementBuilder value(Number value){
         this.value = value;
         return this;
     }
     
-    public QuantitativeObservationBuilder unit(UnitEnum unit){
+    public MeasurementBuilder unit(UnitEnum unit){
         this.unit = new UnitBuilder()
                 .id(unit.getId())
                 .name(unit.getName())
@@ -58,7 +58,7 @@ public class QuantitativeObservationBuilder {
         return this;
     }   
     
-    public QuantitativeObservation build() {
-        return new QuantitativeObservation(phenomenonTypeId, phenomenonType, value, unit);
+    public Measurement build() {
+        return new Measurement(phenomenonTypeId, phenomenonType, value, unit);
     }
 }
