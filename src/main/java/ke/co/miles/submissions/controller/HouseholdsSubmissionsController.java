@@ -214,17 +214,17 @@ public class HouseholdsSubmissionsController {
                           log.debug("Form Id = {}", form);
 
                           // Connect to the Test Data Server
-													URL url = new URL("https://www.miles.co.ke/household.json");
+													//URL url = new URL("https://www.miles.co.ke/household.json");
 
 													// Connect to the Live Data Server
-                          /*URL url =
+                          URL url =
                               new URL(
                                   kobo.getBaseAssetsURL()
                                       + "/"
                                       + form
                                       + "/data.json?query={\"_submission_time\": {\"$gt\": \""
                                       + after
-                                      + "\"}}");*/
+                                      + "\"}}");
 													
 
 
@@ -364,17 +364,17 @@ public class HouseholdsSubmissionsController {
                           log.debug("Form Id = {}", form);
 
                           // Connect to the Test Data Server
-													URL url = new URL("https://www.miles.co.ke/household.json");
+													//URL url = new URL("https://www.miles.co.ke/household.json");
 
 													// Connect to the Live Data Server
-                          /*URL url =
+                          URL url =
                               new URL(
                                   kobo.getBaseAssetsURL()
                                       + "/"
                                       + form
                                       + "/data.json?query={\"_submission_time\": {\"$gt\": \""
                                       + after
-                                      + "\"}}");*/
+                                      + "\"}}");
 
                           // Connect, read and stream the results
                           readAndStreamResultsCount(getConnection(url), fluxSinkEmitter, form);
