@@ -91,7 +91,7 @@ import reactor.core.publisher.FluxSink;
  * @version 1.0
  */
 @RestController
-@RequestMapping("api/v1/submissions/households")
+@RequestMapping("/api/v1/submissions/households")
 @Slf4j
 public class HouseholdsSubmissionsController {
 
@@ -476,7 +476,7 @@ public class HouseholdsSubmissionsController {
               if (totalResults == 0) {
                 break;
               }
-
+							
             case "results":
 
               // Check there are results to read
