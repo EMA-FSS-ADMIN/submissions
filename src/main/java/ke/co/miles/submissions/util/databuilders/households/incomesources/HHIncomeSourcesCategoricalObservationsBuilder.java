@@ -111,7 +111,7 @@ public class HHIncomeSourcesCategoricalObservationsBuilder {
     } else {
       categoricalObservations.add(
           new PhenomenonBuilder()
-              .phenomenonEnum(PhenomenonEnum.HH_MAKES_ITS_INCOME_MAINLY_FROM_WAGE_LABOUR_CASUAL_YES)
+              .phenomenonEnum(PhenomenonEnum.HH_MAKES_ITS_INCOME_MAINLY_FROM_WAGE_LABOUR_CASUAL_NO)
               .build());
     }
 
